@@ -44,6 +44,10 @@ public class HttpServletResponse implements ServletResponse {
 			return;
 		}
 
+		if(!url.startsWith(projectName)) {   //如果不是以项目名开头，说明是动态处理里面到跳转
+		   url=projectName +"/"+url;
+		}
+
 		if (url.indexOf("/") == url.lastIndexOf("/") && url.indexOf("/") < url.length()) { // DayFresh, 即只指定了项目名
 			send302(url);
 		} else {
@@ -52,6 +56,7 @@ public class HttpServletResponse implements ServletResponse {
 				String defaultPath = ReadConfig.getInstance().getProperty("default");
 				// 读取默认资源
 				File fl = new File(basePath, url.substring(1) + defaultPath);
+			    
 				if (!fl.exists()) {
 					error404(url);
 					return;

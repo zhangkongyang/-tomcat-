@@ -59,7 +59,6 @@ public class ParseUrlPattern {
 			for(Element el : mimes) {
 				urlPattern.put("/"+projectName+el.selectSingleNode("url-pattern").getText().trim(), el.selectSingleNode("servlet-class").getText().trim());
 			}
-			System.out.println(urlPattern);
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		}  

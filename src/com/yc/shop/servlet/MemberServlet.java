@@ -16,6 +16,7 @@ public class MemberServlet  extends HttpServlet{
 	@Override
 	public void doPost(ServletRequest request, ServletResponse response) {
 		String name = request.getParameter("name");
+		System.out.println(name);
 		String pwd = request.getParameter("pwd");
 		PrintWriter out = null;
 		

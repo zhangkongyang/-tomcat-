@@ -52,9 +52,9 @@ public class ServerService implements Runnable{
 		// url= /DayFresh/login?id=123&name=yc
 	
 		String urlStr = url.substring(1);  //去掉前面的/ -> DayFresh/login?id=123&name=yc
-		String projectName = url.substring(0, url.indexOf("/"));    //  DayFresh
+		String projectName = urlStr.substring(0, urlStr.indexOf("/"));    //  DayFresh
 		 
-		ServletResponse response = new HttpServletResponse(projectName,os);
+		ServletResponse response = new HttpServletResponse("/"+projectName,os);
 		
 		//是不是动态资源地址
 		String clazz = ParseUrlPattern.getClass(url);  //如果能取到处理类，则说明是动态资源
@@ -62,7 +62,6 @@ public class ServerService implements Runnable{
 			response.sendRedirect(url);
 			return;
 		}
-		System.out.println(clazz);
 		
 		/*
 		 * 处理动态资源
@@ -75,6 +74,7 @@ public class ServerService implements Runnable{
 		
 		
 		try {
+		
 			classPath = new URL("file",null,TomcatConstants.BASE_PATH +"/"+projectName +"/bin");
 			
 			//创建一个类加载器，告诉它到这个路径下加载类
@@ -90,7 +90,7 @@ public class ServerService implements Runnable{
 			 servlet.service(request, response);
 			 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			send500(e);
 			e.printStackTrace();
 		}
 		

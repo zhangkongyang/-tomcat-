@@ -65,13 +65,14 @@ public class HttpServletRequest implements ServletRequest {
 		// 处理请求地址的参数
 		String str = headStrs.get(0).split(" ")[1]; // 获取请求地址
 		if (str.contains("?")) { // 包含？ 代表有参数
-			str = str.substring(str.indexOf(" ?") + 1); // 获取请求参数
+			str = str.substring(str.indexOf("?") + 1); // 获取请求参数
 			String[] params = str.split("&");
 			String[] temp;
 			for (String param : params) {
 				temp = param.split("=");
 				this.parameter.put(temp[0], temp[1]);
 			}
+
 		}
 
 		if (TomcatConstants.REQUEST_METHOD_POSAT.equals(this.method)) { // 说明是POST请求
